@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISFP 대학생의 Cozy Autumn Space</title>
+    <style>
+        :root {
+            --bg-color: #F6F1EA;
+            --card-bg: #FCF9F5;
+            --text-main: #433D37;
+            --text-sub: #8A7F72;
+            --accent: #C8B49E;
+            --accent-deep: #A68E74;
+            --border-color: #E6DDD0;
+            --pill-bg: #EFE8DE;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 48px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 580px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 22px;
+            padding: 28px;
+            box-shadow: 0 6px 24px rgba(67, 61, 55, 0.03);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(67, 61, 55, 0.05);
+        }
+
+        .section-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            color: var(--text-sub);
+            margin-bottom: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-label::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+
+        /* 프로필 섹션 */
+        .profile {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 36px 28px;
+        }
+
+        .avatar {
+            width: 82px;
+            height: 82px;
+            background: linear-gradient(135deg, #EADFD2 0%, #D9C7B3 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            margin-bottom: 4px;
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 4px 12px rgba(166, 142, 116, 0.15);
+        }
+
+        .profile h1 {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.4px;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .badge {
+            background-color: var(--pill-bg);
+            color: var(--text-sub);
+            padding: 5px 13px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 500;
+        }
+
+        .bio {
+            font-size: 14.5px;
+            color: var(--text-sub);
+            max-width: 420px;
+            margin-top: 4px;
+        }
+
+        /* 요즘의 취향 (음악, 책, 드라마) */
+        .music-player {
+            background-color: var(--pill-bg);
+            border-radius: 16px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .music-player:hover {
+            background-color: #E8DFD3;
+        }
+
+        .music-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .vinyl {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #FCF9F5 18%, #433D37 20%, #2D2925 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .vinyl.playing {
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .music-info h3 {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .music-info p {
+            font-size: 13px;
+            color: var(--text-sub);
+        }
+
+        .play-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 7px 14px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .media-box {
+            background-color: var(--pill-bg);
+            padding: 18px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .media-tag {
+            font-size: 11.5px;
+            color: var(--accent-deep);
+            font-weight: 600;
+        }
+
+        .media-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .media-desc {
+            font-size: 13px;
+            color: var(--text-sub);
+            line-height: 1.45;
+        }
+
+        /* 버킷리스트 (스위스) */
+        .switzerland-card {
+            background: linear-gradient(135deg, #F2ECE3 0%, #EAE1D5 100%);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .sw-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sw-icon {
+            font-size: 32px;
+        }
+
+        .sw-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .sw-header span {
+            font-size: 12.5px;
+            color: var(--text-sub);
+        }
+
+        .sw-moments {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .moment-item {
+            background-color: rgba(252, 249, 245, 0.75);
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 좋아하는 것들 모음 */
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .chip {
+            background-color: var(--pill-bg);
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 미니 방명록 */
+        .guestbook-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        input {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 11px 14px;
+            font-size: 13.5px;
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--accent-deep);
+        }
+
+        .input-name {
+            width: 34%;
+        }
+
+        .input-msg {
+            flex: 1;
+        }
+
+        .submit-btn {
+            background-color: var(--accent-deep);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 12px;
+            padding: 11px 18px;
+            font-size: 13.5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            align-self: flex-end;
+        }
+
+        .submit-btn:hover {
+            background-color: #937C63;
+        }
+
+        .guestbook-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 240px;
+            overflow-y: auto;
+        }
+
+        .guest-item {
+            background-color: var(--bg-color);
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .guest-author {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 2px;
+            color: var(--text-main);
+        }
+
+        .guest-text {
+            color: var(--text-sub);
+            word-break: break-word;
+        }
+
+        .guest-date {
+            font-size: 11px;
+            color: #ABA093;
+            white-space: nowrap;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-sub);
+            padding: 8px 0 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 1. 프로필 -->
+        <section class="card profile">
+            <div class="avatar">🍂</div>
+            <h1>여유를 사랑하는 대학생의 공간</h1>
+            <div class="badges">
+                <span class="badge">ISFP</span>
+                <span class="badge">가을 러버 🍁</span>
+                <span class="badge">Cozy Beige Mood</span>
+            </div>
+            <p class="bio">선선한 가을 공기와 잔잔한 음악을 좋아합니다. 일상의 소소한 취향들을 차곡차곡 기록해 두는 작은 공간이에요.</p>
+        </section>
+
+        <!-- 2. 요즘의 취향 (음악, 책, 드라마) -->
+        <section class="card">
+            <div class="section-label">Currently Into</div>
+            
+            <div class="music-player" onclick="toggleMusic()">
+                <div class="music-left">
+                    <div class="vinyl" id="vinyl"></div>
+                    <div class="music-info">
+                        <h3>Crush (크러쉬) 플레이리스트</h3>
+                        <p id="music-status">클릭해서 가을 감성 플레이어 켜기</p>
+                    </div>
+                </div>
+                <button class="play-btn" id="play-btn">▶ 재생</button>
+            </div>
+
+            <div class="media-grid">
+                <div class="media-box">
+                    <span class="media-tag">📖 READING</span>
+                    <div class="media-title">사랑의 증명</div>
+                    <div class="media-desc">요즘 마음을 차분하게 채워주며 천천히 읽고 있는 에세이</div>
+                </div>
+                <div class="media-box">
+                    <span class="media-tag">🎬 WATCHING</span>
+                    <div class="media-title">100일의 거짓말</div>
+                    <div class="media-desc">요즘 몰입해서 챙겨 보고 있는 흥미진진한 드라마</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 스위스 버킷리스트 -->
+        <section class="card">
+            <div class="section-label">Dream Destination</div>
+            <div class="switzerland-card">
+                <div class="sw-header">
+                    <div class="sw-icon">🏔️</div>
+                    <div>
+                        <h3>언젠가 꼭 떠나고 싶은, 스위스</h3>
+                        <span>자연 속에서 온전히 숨 쉬는 순간을 꿈꾸며</span>
+                    </div>
+                </div>
+                <div class="sw-moments">
+                    <div class="moment-item">
+                        <span>🚂</span>
+                        <span>기차 창밖으로 끝없이 펼쳐진 설산 바라보기</span>
+                    </div>
+                    <div class="moment-item">
+                        <span>🌿</span>
+                        <span>탁 트인 푸른 초원 위를 여유롭게 산책하기</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 좋아하는 것들 모음 -->
+        <section class="card">
+            <div class="section-label">Favorite Things</div>
+            <div class="chips">
+                <div class="chip">🍂 선선한 가을 바람</div>
+                <div class="chip">🎧 크러쉬 노래 반복 재생</div>
+                <div class="chip">☕ 따뜻한 베이지 톤 카페</div>
+                <div class="chip">📖 조용한 독서 시간</div>
+                <div class="chip">🎬 드라마 정주행</div>
+                <div class="chip">🎨 나만의 속도 지키기</div>
+            </div>
+        </section>
+
+        <!-- 5. 미니 방명록 -->
+        <section class="card">
+            <div class="section-label">Guestbook</div>
+            <form class="guestbook-form" onsubmit="addGuestbook(event)">
+                <div class="input-row">
+                    <input type="text" id="guest-name" class="input-name" placeholder="닉네임" maxlength="12" required>
+                    <input type="text" id="guest-msg" class="input-msg" placeholder="짧은 인사를 남겨주세요 :)" maxlength="80" required>
+                </div>
+                <button type="submit" class="submit-btn">남기기</button>
+            </form>
+            <div class="guestbook-list" id="guestbook-list"></div>
+        </section>
+
+        <footer class="footer">
+            © 2026. Cozy Autumn & Beige Minimal Space.
+        </footer>
+    </div>
+
+    <script>
+        // 음악 플레이어 토글 인터랙션
+        let isPlaying = false;
+        const lyrics = [
+            "🎧 지금 크러쉬의 감성적인 멜로디가 흐르는 중...",
+            "🍂 가을 바람과 어울리는 잔잔한 R&B 감상 중...",
+            "🎶 플레이리스트 반복 재생 중..."
+        ];
+
+        function toggleMusic() {
+            isPlaying = !isPlaying;
+            const vinyl = document.getElementById('vinyl');
+            const btn = document.getElementById('play-btn');
+            const status = document.getElementById('music-status');
+
+            if (isPlaying) {
+                vinyl.classList.add('playing');
+                btn.textContent = '⏸ 일시정지';
+                const randomLyric = lyrics[Math.floor(Math.random() * lyrics.length)];
+                status.textContent = randomLyric;
+            } else {
+                vinyl.classList.remove('playing');
+                btn.textContent = '▶ 재생';
+                status.textContent = '클릭해서 가을 감성 플레이어 켜기';
+            }
+        }
+
+        // 로컬스토리지 기반 미니 방명록
+        const STORAGE_KEY = 'isfp_landing_guestbook_v1';
+        const defaultMessages = [
+            { name: '가을산책', msg: '차분한 베이지 톤 분위기가 너무 좋아요! 스위스 꼭 가시길 응원해요 🏔️', date: '2026.11.24' },
+            { name: '크러쉬팬', msg: '저도 요즘 크러쉬 노래 자주 듣는데 반가워요 🎧', date: '2026.11.24' }
+        ];
+
+        function loadGuestbook() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            const messages = saved ? JSON.parse(saved) : defaultMessages;
+            renderGuestbook(messages);
+        }
+
+        function renderGuestbook(messages) {
+            const list = document.getElementById('guestbook-list');
+            list.innerHTML = '';
+            messages.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'guest-item';
+                div.innerHTML = `
+                    <div>
+                        <div class="guest-author">${escapeHtml(item.name)}</div>
+                        <div class="guest-text">${escapeHtml(item.msg)}</div>
+                    </div>
+                    <span class="guest-date">${item.date}</span>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function addGuestbook(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('guest-name');
+            const msgInput = document.getElementById('guest-msg');
+            const name = nameInput.value.trim();
+            const msg = msgInput.value.trim();
+            if (!name || !msg) return;
+
+            const saved = localStorage.getItem(STORAGE_KEY);
+            const messages = saved ? JSON.parse(saved) : [...defaultMessages];
+
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+
+            messages.unshift({ name, msg, date: dateStr });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+
+            nameInput.value = '';
+            msgInput.value = '';
+            renderGuestbook(messages);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        loadGuestbook();
+    </script>
+</body>
+</html>
